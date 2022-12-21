@@ -51,7 +51,7 @@ const Text = styled.span`
 `;
 
 export type Props = {
-  label: string;
+  label?: string;
   placeholder: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   icon?: AvailableIcons;

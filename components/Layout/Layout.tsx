@@ -14,32 +14,24 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.background};
   padding: 0.5rem;
   grid-template-areas:
-    "header"
-    "nav"
-    "search"
-    "content"
-    "footer";
+    "header  nav"
+    "search  search"
+    "content content"
+    "footer  footer";
+  nav {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 5vmin;
+  }
   @media (min-width: 500px) {
     grid-template-columns: 1fr 3fr;
-    grid-template-areas:
-      "header  search"
-      "nav     nav"
-      "content content"
-      "footer  footer";
-    nav {
-      flex-direction: row;
-      justify-content: space-between;
-    }
   }
-  @media (min-width: 700px) {
+  @media (min-width: 960px) {
     grid-template-columns: 1fr 4fr 2fr;
     grid-template-areas:
       "header  search  nav"
       "content content content"
       "footer  footer  footer";
-    nav {
-      flex-direction: row;
-    }
   }
 `;
 
@@ -48,8 +40,19 @@ const StyledLogo = styled(Image)`
   display: flex;
   align-items: center;
   height: 4rem;
+  justify-content: flex-start;
   @media (max-width: 500px) {
-    justify-content: center;
+    & .logo_full {
+      display: none;
+    }
+    @media (min-width: 560px) {
+      & .logo_short {
+        display: none;
+      }
+      & .logo_full {
+        display: inline;
+      }
+    }
   }
 `;
 
@@ -66,7 +69,7 @@ const MainNav = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 0.5rem;
+  margin: 0 2vmin;
   a {
     cursor: pointer;
     color: ${({ theme }) => theme.font.regular};

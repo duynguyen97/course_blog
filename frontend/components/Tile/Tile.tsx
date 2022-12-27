@@ -12,8 +12,9 @@ const Section = styled.section`
     boxShadow(theme.components.shadow1, theme.components.shadow2)}
 `;
 
-type Props = {
+export type Props = {
   header: string;
+  children: React.ReactNode;
 };
 
 export const Tile: FC<Props> = ({ header, children }) => (

@@ -1,6 +1,4 @@
 import { ComponentStoryObj, ComponentMeta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { screen } from "@storybook/testing-library";
 
 import { Feedback } from "./Feedback";
 
@@ -10,23 +8,15 @@ export default {
 } as ComponentMeta<typeof Feedback>;
 
 export const ValidFeedback: ComponentStoryObj<typeof Feedback> = {
-  play: async () => {
-    await expect(screen.getByText("Looks good!")).toBeInTheDocument();
+  args: {
+    children: "Looks good!",
+    isValid: true,
   },
-};
-ValidFeedback.args = {
-  children: "Looks good!",
-  isValid: true,
 };
 
 export const InvalidFeedback: ComponentStoryObj<typeof Feedback> = {
-  play: async () => {
-    await expect(
-      screen.getByText("Please provide a valid value")
-    ).toBeInTheDocument();
+  args: {
+    children: "Please provide a valid value",
+    isValid: false,
   },
-};
-InvalidFeedback.args = {
-  children: "Please provide a valid value",
-  isValid: false,
 };

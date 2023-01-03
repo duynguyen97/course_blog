@@ -1,15 +1,15 @@
-import styled from "@emotion/styled";
+import { ComponentStoryObj, ComponentMeta } from "@storybook/react";
 
-export type Props = {
-  underline?: boolean;
+import { StyledLink } from "./StyledLink";
+
+export default {
+  title: "Content/StyledLink",
+  component: StyledLink,
+} as ComponentMeta<typeof StyledLink>;
+
+export const BasicStyledLink: ComponentStoryObj<typeof StyledLink> = {
+  args: {
+    children: "Hands-On React. Build advanced React JS Frontend with expert",
+    href: "/hands-on-react-js",
+  },
 };
-
-export const StyledLink = styled.a<Props>`
-  all: unset;
-  cursor: pointer;
-  color: ${({ theme }) => theme.font.regular};
-  text-decoration: ${({ underline }) => (underline ? "underline" : "none")};
-  &:hover {
-    opacity: 0.7;
-  }
-`;

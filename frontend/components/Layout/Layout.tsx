@@ -2,6 +2,7 @@ import { useState, useLayoutEffect, useEffect, FC } from "react";
 import Link from "next/link";
 import { ThemeProvider } from "@emotion/react";
 
+import { AppDispatch, RootState } from "@/store";
 import { Themes } from "@/styles/themes";
 import logo from "../../public/blogger.svg";
 import { IconButton } from "@/components/IconButton";
@@ -16,12 +17,20 @@ import {
   Content,
   Footer,
 } from "./components";
+import { useDispatch, useSelector } from "react-redux";
+import { login, selectUser } from "@/services/userSlice";
 
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-export const Layout: FC = ({ children }) => {
+type Props = {
+  children: React.ReactNode;
+};
+
+export const Layout: FC<Props> = ({ children }) => {
+  const { username } = useSelector<RootState, RootState["user"]>(selectUser);
   const [isDark, setIsDark] = useState(true);
+  const dispatch = useDispatch<AppDispatch>();
 
   const toggleDark = () => {
     localStorage.setItem("theme", isDark ? "light" : "dark");
@@ -29,6 +38,7 @@ export const Layout: FC = ({ children }) => {
   };
 
   useIsomorphicLayoutEffect(() => {
+    dispatch(login());
     const isDark =
       Boolean(localStorage.getItem("theme") === "dark") ||
       window.matchMedia("prefers-color-scheme: dark").matches;
@@ -41,22 +51,20 @@ export const Layout: FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <Wrapper>
-        <Link href="/" passHref>
-          <LogoLink>
-            <StyledLogo
-              width={60}
-              height={60}
-              src={logo}
-              alt="logo-blog"
-            ></StyledLogo>
-          </LogoLink>
-        </Link>
+        <LogoLink href="/" passHref>
+          <StyledLogo
+            width={60}
+            height={60}
+            src={logo}
+            alt="logo-blog"
+          ></StyledLogo>
+        </LogoLink>
         <MainNav>
-          <Link href="/all" passHref>
-            <StyledLink>All</StyledLink>
-          </Link>
-          <Link href="/login" passHref>
-            <IconButton name="Login" size={1} />
+          <StyledLink href="/all" passHref>
+            All
+          </StyledLink>
+          <Link href={username ? "/user" : "/login"} passHref>
+            <IconButton name={username ? "User" : "Login"} size={1} />
           </Link>
           <IconButton
             name={isDark ? "Moon" : "Sun"}

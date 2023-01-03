@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
+import Link from "next/link";
 
 export type Props = {
   underline?: boolean;
 };
 
-export const StyledLink = styled.a<Props>`
+export const StyledLink = styled(Link)`
   all: unset;
   cursor: pointer;
   color: ${({ theme }) => theme.font.regular};
